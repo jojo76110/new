@@ -1,0 +1,5 @@
+{
+  "name": "表情包神器",
+  "description": "An application that allows users to upload a portrait photo and generate multiple stickers with different expressions using AI.",
+  "requestFramePermissions": []
+}
