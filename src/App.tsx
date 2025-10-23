@@ -1,3 +1,5 @@
+
+
 import React, { useState } from 'react';
 import { GoogleGenAI, Modality } from '@google/genai';
 import saveAs from 'file-saver';
@@ -10,8 +12,9 @@ import { DownloadIcon, GenerateIcon } from './components/Icons';
 import { DEFAULT_STYLES, BACKGROUND_STYLES } from './constants';
 import { type GeneratedImage } from './types';
 
-// Fix: Initialize the GoogleGenAI client with the VITE_ prefixed environment variable for client-side access.
-const ai = new GoogleGenAI({ apiKey: import.meta.env.VITE_GEMINI_API_KEY! });
+// FIX: Per coding guidelines, the API key must be obtained from `process.env.API_KEY`.
+// This also resolves the reported TypeScript error.
+const ai = new GoogleGenAI({ apiKey: process.env.API_KEY! });
 
 const sleep = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
 
@@ -78,9 +81,10 @@ ${backgroundRequirement}
 4.  **表情**：这张贴纸的表情应为“${expression}”。
 5.  **纯净输出**：图片中不能包含任何文字、字母或水印。`;
             
+            // FIX: Per coding guidelines, `contents` should be an object, not an array of objects.
             const response = await ai.models.generateContent({
               model: 'gemini-2.5-flash-image',
-              contents: [{
+              contents: {
                 parts: [
                   {
                     inlineData: {
@@ -90,7 +94,7 @@ ${backgroundRequirement}
                   },
                   { text: prompt },
                 ],
-              }],
+              },
               config: {
                 responseModalities: [Modality.IMAGE],
               },
