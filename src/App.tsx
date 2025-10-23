@@ -10,8 +10,7 @@ import { DownloadIcon, GenerateIcon } from './components/Icons';
 import { DEFAULT_STYLES, BACKGROUND_STYLES } from './constants';
 import { type GeneratedImage } from './types';
 
-// FIX: Per coding guidelines, the API key must be obtained from `process.env.API_KEY`.
-// The execution environment is assumed to make this variable available.
+// FIX: The API key must be obtained from process.env.API_KEY as per the coding guidelines.
 const ai = new GoogleGenAI({ apiKey: process.env.API_KEY! });
 
 const sleep = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
