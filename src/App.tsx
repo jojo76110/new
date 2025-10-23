@@ -10,7 +10,8 @@ import { DownloadIcon, GenerateIcon } from './components/Icons';
 import { DEFAULT_STYLES, BACKGROUND_STYLES } from './constants';
 import { type GeneratedImage } from './types';
 
-// FIX: The API key must be obtained from `process.env.API_KEY` as per the coding guidelines. This also resolves the TypeScript error "Property 'env' does not exist on type 'ImportMeta'".
+// FIX: Per coding guidelines, the API key must be obtained from `process.env.API_KEY`.
+// The execution environment is assumed to make this variable available.
 const ai = new GoogleGenAI({ apiKey: process.env.API_KEY! });
 
 const sleep = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
@@ -78,8 +79,6 @@ ${backgroundRequirement}
 4.  **表情**：这张贴纸的表情应为“${expression}”。
 5.  **纯净输出**：图片中不能包含任何文字、字母或水印。`;
             
-            // FIX: The `contents` property must be an array containing an object with parts,
-            // as per the Gemini API specification for multipart (image+text) requests.
             const response = await ai.models.generateContent({
               model: 'gemini-2.5-flash-image',
               contents: [{
